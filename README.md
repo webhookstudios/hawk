@@ -1,8 +1,8 @@
 # Hawk
 
-*Formerly Squint. Part of the Sedge family of webhookstudios apps.*
+*Part of the Sedge family of webhookstudios apps.*
 
-A webcam control panel for Ubuntu, in the spirit of OBSBOT Center or Logitech G HUB. Hawk shows a live preview of your camera next to every setting it supports, and saves presets you can recall with one click. Built with GTK 4 and libadwaita, so it fits Ubuntu.
+A webcam control panel for Ubuntu. Hawk shows a live preview of your camera next to every setting it supports, and saves presets you can recall with one click. Built with GTK 4 and libadwaita, so it fits Ubuntu.
 
 ![Hawk with the live preview, saved presets and the position pad](docs/screenshots/window.png)
 
@@ -55,8 +55,8 @@ Tested with an **OBSBOT Meet 2**. Over the standard UVC controls it reports brig
 
 What Hawk **can't** do on OBSBOT cameras:
 
-- **AI tracking on/off, auto-framing modes, face focus, gesture control and HDR on the Meet 2, Tiny, Tiny 2 and Tail.** OBSBOT Center switches these through a private "extension unit" on the camera (on the Meet 2, unit 2 with GUID `9a1e7291-6843-4683-6d92-39bc7906ee49`, seven 60-byte commands). OBSBOT doesn't publish what those bytes mean, and Hawk doesn't guess. Sending made-up commands to a camera's firmware is how you break one.
-- **Pan, tilt and zoom while AI framing is on.** The Meet 2 accepts the values but its AI framing keeps control of the picture, so nothing visibly moves. Turn AI framing off first with the camera's gesture or button (or once in OBSBOT Center on another computer; the camera remembers it). Hawk shows this note under **Position** for OBSBOT cameras.
+- **AI tracking on/off, auto-framing modes, face focus, gesture control and HDR on the Meet 2, Tiny, Tiny 2 and Tail.** The camera maker's own app switches these through a private "extension unit" on the camera (on the Meet 2, unit 2 with GUID `9a1e7291-6843-4683-6d92-39bc7906ee49`, seven 60-byte commands). OBSBOT doesn't publish what those bytes mean, and Hawk doesn't guess. Sending made-up commands to a camera's firmware is how you break one.
+- **Pan, tilt and zoom while AI framing is on.** The Meet 2 accepts the values but its AI framing keeps control of the picture, so nothing visibly moves. Turn AI framing off first with the camera's gesture or button (or once in the camera maker's app on another computer; the camera remembers it). Hawk shows this note under **Position** for OBSBOT cameras.
 
 **Meet 4K only:** the AI tracking switch (**Fixed** / **Track me**) uses the commands published by the open-source [meet4k](https://github.com/samliddicott/meet4k) tool, which was written on that camera (unit 6, selector 6). Hawk only sends them after checking that the camera calls itself a Meet 4K and has that exact unit. It hasn't been tested on a real Meet 4K. Your choice is kept and put back along with your other settings. The Meet 2's unit is laid out differently, so these commands are not sent to it.
 
@@ -74,10 +74,10 @@ No `v4l2-ctl` or other tools needed: Hawk talks to the camera directly.
 
 ### With the deb package (recommended)
 
-Download `hawk_1.1.0_all.deb` from the [latest release](https://github.com/webhookstudios/hawk/releases/latest), then:
+Download `hawk_1.1.1_all.deb` from the [latest release](https://github.com/webhookstudios/hawk/releases/latest), then:
 
 ```bash
-sudo apt install ./hawk_1.1.0_all.deb
+sudo apt install ./hawk_1.1.1_all.deb
 ```
 
 Open **Hawk** from the apps menu. The package also adds a login item that puts your last preset back. To remove it:

@@ -32,7 +32,7 @@ chmod 644 "$STAGE/usr/share/applications/$APP_ID.desktop" "$STAGE/etc/xdg/autost
 
 cat > "$STAGE/usr/share/doc/hawk/copyright" <<EOT
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: Hawk (formerly Squint)
+Upstream-Name: Hawk
 Source: https://github.com/webhookstudios/hawk
 
 Files: *
@@ -62,7 +62,7 @@ Section: video
 Priority: optional
 Homepage: https://github.com/webhookstudios/hawk
 Description: Webcam settings, live preview and presets
- Hawk (formerly Squint) is a control panel for USB webcams. It shows a live preview and
+ Hawk is a control panel for USB webcams. It shows a live preview and
  every setting the camera reports: pan, tilt and zoom, focus, exposure,
  gain, white balance, brightness, contrast, saturation, sharpness,
  backlight compensation and anti-flicker.
