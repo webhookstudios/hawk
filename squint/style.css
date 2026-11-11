@@ -1,0 +1,18 @@
+@define-color accent_bg_color #2f8f83;
+@define-color accent_color #3fb3a4;
+@define-color accent_fg_color #ffffff;
+:root { --accent-bg-color: #2f8f83; --accent-color: #3fb3a4; --accent-fg-color: #ffffff; }
+
+.left-pane { padding: 18px; }
+.preview-frame { background: #0b0d10; border-radius: 14px; }
+.preview-status { color: rgba(255, 255, 255, 0.85); }
+.preview-status .description { opacity: 0.75; }
+
+.controls { min-width: 430px; }
+.slider-row scale { margin: 0 2px; }
+.slider-row .numeric { font-size: 13px; }
+
+.pad-row { padding: 14px 0; }
+.pad-button { min-width: 44px; min-height: 44px; }
+
+button.position { padding: 6px 16px; }
