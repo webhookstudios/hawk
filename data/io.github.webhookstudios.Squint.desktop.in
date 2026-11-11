@@ -1,11 +1,11 @@
 [Desktop Entry]
 Type=Application
-Name=Squint
+Name=Hawk
 GenericName=Webcam Settings
 Comment=Live preview, picture settings and saved presets for your webcam
 Exec=@EXEC@
 Icon=@ICON@
 Terminal=false
 Categories=AudioVideo;Video;GTK;
-Keywords=webcam;camera;obsbot;uvc;v4l2;zoom;focus;exposure;white balance;preset;
+Keywords=squint;sedge;webcam;camera;obsbot;uvc;v4l2;zoom;focus;exposure;white balance;preset;
 StartupWMClass=io.github.webhookstudios.Squint

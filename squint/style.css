@@ -1,10 +1,7 @@
-@define-color accent_bg_color #2f8f83;
-@define-color accent_color #3fb3a4;
-@define-color accent_fg_color #ffffff;
-:root { --accent-bg-color: #2f8f83; --accent-color: #3fb3a4; --accent-fg-color: #ffffff; }
+/* Colors and fonts come from the Sedge kit (sedge/). */
 
 .left-pane { padding: 18px; }
-.preview-frame { background: #0b0d10; border-radius: 14px; }
+.preview-frame { background: #101714; border-radius: 14px; }
 .preview-status { color: rgba(255, 255, 255, 0.85); }
 .preview-status .description { opacity: 0.75; }
 

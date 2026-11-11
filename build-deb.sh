@@ -20,6 +20,8 @@ install -d "$SHARE/squint" "$STAGE/DEBIAN" "$STAGE/usr/bin" \
     "$STAGE/usr/share/doc/squint" "$STAGE/etc/xdg/autostart"
 
 install -m 644 "$ROOT"/squint/*.py "$ROOT/squint/style.css" "$SHARE/squint/"
+cp -r "$ROOT/squint/sedge" "$SHARE/squint/"
+find "$SHARE/squint/sedge" -type f -exec chmod 644 {} +
 install -m 755 "$ROOT/bin/squint" "$STAGE/usr/bin/squint"
 install -m 644 "$ROOT/data/$APP_ID.svg" "$STAGE/usr/share/icons/hicolor/scalable/apps/"
 sed -e 's|@EXEC@|squint|' -e "s|@ICON@|$APP_ID|" "$ROOT/data/$APP_ID.desktop.in" \
@@ -30,7 +32,7 @@ chmod 644 "$STAGE/usr/share/applications/$APP_ID.desktop" "$STAGE/etc/xdg/autost
 
 cat > "$STAGE/usr/share/doc/squint/copyright" <<EOT
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: Squint
+Upstream-Name: Hawk (formerly Squint)
 Source: https://github.com/webhookstudios/squint
 
 Files: *
@@ -38,6 +40,11 @@ Copyright: $(date +%Y) webhookstudios
 License: GPL-2+
  On Debian systems, the full text of the GNU General Public License
  version 2 can be found in /usr/share/common-licenses/GPL-2.
+
+Files: */sedge/fonts/*
+Copyright: 2023 The Young Serif Project Authors; 2015 The Public Sans Project Authors
+License: OFL-1.1
+ The full license texts are in the sedge/fonts/ folder.
 EOT
 chmod 644 "$STAGE/usr/share/doc/squint/copyright"
 
@@ -52,7 +59,7 @@ Section: video
 Priority: optional
 Homepage: https://github.com/webhookstudios/squint
 Description: Webcam settings, live preview and presets
- Squint is a control panel for USB webcams. It shows a live preview and
+ Hawk (formerly Squint) is a control panel for USB webcams. It shows a live preview and
  every setting the camera reports: pan, tilt and zoom, focus, exposure,
  gain, white balance, brightness, contrast, saturation, sharpness,
  backlight compensation and anti-flicker.

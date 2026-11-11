@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-Name=Squint camera presets
+Name=Hawk camera presets
 Comment=Puts your last Squint preset back at login and whenever a webcam is plugged in
 Exec=@EXEC@ --background
 NoDisplay=true

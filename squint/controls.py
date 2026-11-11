@@ -117,7 +117,7 @@ class SliderRow(Adw.ActionRow, _Row):
         self.value_label.add_css_class('numeric')
         self.value_label.add_css_class('dim-label')
         self.reset = Gtk.Button(icon_name='edit-undo-symbolic', valign=Gtk.Align.CENTER,
-                                tooltip_text='Back to default')
+                                tooltip_text='Reset')
         self.reset.add_css_class('flat')
         self.reset.add_css_class('circular')
         self.reset.connect('clicked', lambda *_: self.adj.set_value(ctrl.default))

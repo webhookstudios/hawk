@@ -17,7 +17,7 @@ TICK_MS = 40       # how often a held arrow button moves the camera
 HOLD_STEPS = 100   # a held arrow crosses the whole range in this many ticks
 OBSBOT_VENDOR = '3564:'  # Remo Tech, the maker of OBSBOT cameras
 OBSBOT_NOTE = ('OBSBOT cameras ignore pan, tilt and zoom while AI framing or tracking is on. '
-               'Turn it off with the camera’s gesture or button first. Squint can’t switch it on '
+               'Turn it off with the camera’s gesture or button first. Hawk can’t switch it on '
                'this model, because OBSBOT keeps that part of the camera private.')
 OBSBOT_SWITCHABLE_NOTE = ('Pan, tilt and zoom only take effect while AI tracking is set to Fixed.')
 
@@ -33,7 +33,7 @@ REMEMBER_MS = 600  # settle time before the current settings are saved as how yo
 
 class SquintWindow(Adw.ApplicationWindow):
     def __init__(self, app, store):
-        super().__init__(application=app, title='Squint', default_width=1180, default_height=760)
+        super().__init__(application=app, title='Hawk', default_width=1180, default_height=760)
         self.set_size_request(760, 520)
         self.app = app
         self.store = store
@@ -74,11 +74,11 @@ class SquintWindow(Adw.ApplicationWindow):
 
         menu = Gio.Menu()
         section = Gio.Menu()
-        section.append('Reset Camera to Defaults', 'win.reset')
-        section.append('Keep My Settings After Closing', 'win.reapply')
+        section.append('Reset the camera', 'win.reset')
+        section.append('Keep my settings after closing', 'win.reapply')
         menu.append_section(None, section)
         about = Gio.Menu()
-        about.append('About Squint', 'app.about')
+        about.append('About Hawk', 'app.about')
         menu.append_section(None, about)
         header.pack_end(Gtk.MenuButton(icon_name='open-menu-symbolic', menu_model=menu,
                                        tooltip_text='Main menu', primary=True))
@@ -94,7 +94,7 @@ class SquintWindow(Adw.ApplicationWindow):
         self.preview_status = Adw.StatusPage(icon_name='camera-video-symbolic')
         self.preview_status.add_css_class('compact')
         self.preview_status.add_css_class('preview-status')
-        self.retry = Gtk.Button(label='Show Preview', halign=Gtk.Align.CENTER)
+        self.retry = Gtk.Button(label='Show preview', halign=Gtk.Align.CENTER)
         self.retry.add_css_class('pill')
         self.retry.connect('clicked', lambda *_: self._start_preview(force=True))
         self.preview_status.set_child(self.retry)
@@ -130,8 +130,8 @@ class SquintWindow(Adw.ApplicationWindow):
         content.append(Gtk.Separator(orientation=Gtk.Orientation.VERTICAL))
         content.append(self.page)
 
-        self.empty = Adw.StatusPage(icon_name='camera-disabled-symbolic', title='No Camera Found',
-                                    description='Plug in a webcam. Squint finds it right away.')
+        self.empty = Adw.StatusPage(icon_name='camera-disabled-symbolic', title='No camera found',
+                                    description='Plug in a webcam. Hawk finds it right away.')
         self.stack = Gtk.Stack(transition_type=Gtk.StackTransitionType.CROSSFADE)
         self.stack.add_named(content, 'camera')
         self.stack.add_named(self.empty, 'empty')
@@ -184,7 +184,7 @@ class SquintWindow(Adw.ApplicationWindow):
         self.camera_pick.handler_unblock(self.camera_pick_id)
         self.camera_pick.set_visible(bool(cameras))
         if not cameras:
-            self.set_title('Squint')
+            self.set_title('Hawk')
             self._close_camera()
             self.stack.set_visible_child_name('empty')
             return
@@ -221,7 +221,7 @@ class SquintWindow(Adw.ApplicationWindow):
         self.info = info
         self.store['camera'] = info.key
         self.store.camera(info.key, info.name)
-        self.set_title(f'{info.name} – Squint')
+        self.set_title(f'{info.name} – Hawk')
         self._build_controls()
         self._build_positions()
         self._start_preview()
@@ -301,7 +301,7 @@ class SquintWindow(Adw.ApplicationWindow):
 
         if not self.rows:
             group = Adw.PreferencesGroup(
-                title='No Adjustable Settings',
+                title='No adjustable settings',
                 description='This camera does not report any standard controls.')
             self._add_group(group)
         self._refresh_rows()
@@ -558,8 +558,8 @@ class SquintWindow(Adw.ApplicationWindow):
     def _preset_menu(self, word, name):
         menu = Gio.Menu()
         target = GLib.Variant.new_string(name)
-        for label, action in (('Update to Current Settings' if word == 'preset'
-                               else 'Update to Current Position', 'update'),
+        for label, action in (('Update to current settings' if word == 'preset'
+                               else 'Update to current position', 'update'),
                               ('Rename…', 'rename'), ('Delete', 'delete')):
             item = Gio.MenuItem.new(label, None)
             item.set_action_and_target_value(f'win.{action}-{word}', target)
@@ -625,7 +625,7 @@ class SquintWindow(Adw.ApplicationWindow):
             self.position_buttons.append(button)
         add = Gtk.Button(tooltip_text='Save where the camera points now, and its zoom',
                          action_name='win.save-position')
-        add.set_child(Adw.ButtonContent(icon_name='list-add-symbolic', label='Save Position'))
+        add.set_child(Adw.ButtonContent(icon_name='list-add-symbolic', label='Save position'))
         add.add_css_class('pill')
         add.add_css_class('flat')
         self.positions_box.append(add)
@@ -744,21 +744,21 @@ class SquintWindow(Adw.ApplicationWindow):
         self.picture.set_paintable(self.preview.paintable)
         if state == 'busy':
             status.set_icon_name('camera-video-symbolic')
-            status.set_title('Camera in Use')
+            status.set_title('Camera in use')
             status.set_description('Another app is showing this camera, so there is no preview here. '
                                    'The settings still work and show up in that app right away.')
-            self.retry.set_label('Try Again')
+            self.retry.set_label('Try again')
         elif state == 'error':
             status.set_icon_name('dialog-warning-symbolic')
-            status.set_title('No Preview')
+            status.set_title('No preview')
             status.set_description(GLib.markup_escape_text(message or 'The preview could not start.'))
-            self.retry.set_label('Try Again')
+            self.retry.set_label('Try again')
         else:
             status.set_icon_name('camera-disabled-symbolic')
-            status.set_title('Preview Off')
+            status.set_title('Preview off')
             status.set_description('The settings still work. Other apps can use the camera '
                                    'while the preview is off.')
-            self.retry.set_label('Show Preview')
+            self.retry.set_label('Show preview')
 
     def _on_active(self, *_):
         pass

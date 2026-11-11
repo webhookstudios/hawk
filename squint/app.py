@@ -89,6 +89,8 @@ class SquintApp(Adw.Application):
 
     def do_startup(self):
         Adw.Application.do_startup(self)
+        from . import sedge
+        sedge.apply()
         provider = Gtk.CssProvider()
         provider.load_from_path(os.path.join(HERE, 'style.css'))
         Gtk.StyleContext.add_provider_for_display(Gdk.Display.get_default(), provider,
@@ -214,10 +216,10 @@ class SquintApp(Adw.Application):
             return []
 
     def _about(self, *_args):
-        Adw.AboutDialog(application_name='Squint', application_icon=APP_ID, version=__version__,
+        Adw.AboutDialog(application_name='Hawk', application_icon=APP_ID, version=__version__,
                         developer_name='webhookstudios', license_type=Gtk.License.GPL_2_0,
                         website='https://github.com/webhookstudios/squint',
-                        comments='Webcam settings and presets for Ubuntu.').present(self.props.active_window)
+                        comments='Webcam settings and presets.\n\nPart of the Sedge family of apps.').present(self.props.active_window)
 
 
 def main(argv):
