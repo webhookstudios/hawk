@@ -1,0 +1,14 @@
+#!/usr/bin/python3
+"""Starts Hawk from a source folder or from /usr/share/hawk."""
+import os
+import sys
+
+here = os.path.dirname(os.path.realpath(__file__))
+for base in (here, os.path.dirname(here), '/usr/share/hawk'):
+    if os.path.isfile(os.path.join(base, 'hawk', '__init__.py')):
+        sys.path.insert(0, base)
+        break
+
+from hawk.app import main  # noqa: E402
+
+sys.exit(main(sys.argv))

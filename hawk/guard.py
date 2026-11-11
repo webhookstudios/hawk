@@ -1,6 +1,6 @@
 """Notices when any app opens a camera, using inotify on its /dev/video node.
 
-Opening a device node raises IN_OPEN for every process, so Squint learns that Zoom, a browser
+Opening a device node raises IN_OPEN for every process, so Hawk learns that Zoom, a browser
 or OBS just started the camera, and can check that your settings are still in place.
 """
 import ctypes

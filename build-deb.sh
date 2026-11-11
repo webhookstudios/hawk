@@ -1,39 +1,39 @@
 #!/bin/sh
-# Builds dist/squint_<version>_all.deb. Needs only dpkg-deb.
+# Builds dist/hawk_<version>_all.deb. Needs only dpkg-deb.
 #
-#   /usr/share/squint/squint/   the Python package
-#   /usr/bin/squint             launcher
+#   /usr/share/hawk/hawk/   the Python package
+#   /usr/bin/hawk             launcher
 #   /usr/share/applications, /usr/share/icons   apps-menu entry and icon
 #   /etc/xdg/autostart          login item that puts the last preset back
 set -e
 
-APP_ID=io.github.webhookstudios.Squint
+APP_ID=io.github.webhookstudios.Hawk
 ROOT="$(cd "$(dirname "$0")" && pwd)"
-VERSION="$(sed -n "s/^__version__ = '\(.*\)'/\1/p" "$ROOT/squint/__init__.py")"
+VERSION="$(sed -n "s/^__version__ = '\(.*\)'/\1/p" "$ROOT/hawk/__init__.py")"
 STAGE="$(mktemp -d)"
 trap 'rm -rf "$STAGE"' EXIT
 
-SHARE="$STAGE/usr/share/squint"
-install -d "$SHARE/squint" "$STAGE/DEBIAN" "$STAGE/usr/bin" \
+SHARE="$STAGE/usr/share/hawk"
+install -d "$SHARE/hawk" "$STAGE/DEBIAN" "$STAGE/usr/bin" \
     "$STAGE/usr/share/applications" \
     "$STAGE/usr/share/icons/hicolor/scalable/apps" \
-    "$STAGE/usr/share/doc/squint" "$STAGE/etc/xdg/autostart"
+    "$STAGE/usr/share/doc/hawk" "$STAGE/etc/xdg/autostart"
 
-install -m 644 "$ROOT"/squint/*.py "$ROOT/squint/style.css" "$SHARE/squint/"
-cp -r "$ROOT/squint/sedge" "$SHARE/squint/"
-find "$SHARE/squint/sedge" -type f -exec chmod 644 {} +
-install -m 755 "$ROOT/bin/squint" "$STAGE/usr/bin/squint"
+install -m 644 "$ROOT"/hawk/*.py "$ROOT/hawk/style.css" "$SHARE/hawk/"
+cp -r "$ROOT/hawk/sedge" "$SHARE/hawk/"
+find "$SHARE/hawk/sedge" -type f -exec chmod 644 {} +
+install -m 755 "$ROOT/bin/hawk" "$STAGE/usr/bin/hawk"
 install -m 644 "$ROOT/data/$APP_ID.svg" "$STAGE/usr/share/icons/hicolor/scalable/apps/"
-sed -e 's|@EXEC@|squint|' -e "s|@ICON@|$APP_ID|" "$ROOT/data/$APP_ID.desktop.in" \
+sed -e 's|@EXEC@|hawk|' -e "s|@ICON@|$APP_ID|" "$ROOT/data/$APP_ID.desktop.in" \
     > "$STAGE/usr/share/applications/$APP_ID.desktop"
-sed -e 's|@EXEC@|squint|' "$ROOT/data/$APP_ID.autostart.desktop.in" \
+sed -e 's|@EXEC@|hawk|' "$ROOT/data/$APP_ID.autostart.desktop.in" \
     > "$STAGE/etc/xdg/autostart/$APP_ID.autostart.desktop"
 chmod 644 "$STAGE/usr/share/applications/$APP_ID.desktop" "$STAGE/etc/xdg/autostart/$APP_ID.autostart.desktop"
 
-cat > "$STAGE/usr/share/doc/squint/copyright" <<EOT
+cat > "$STAGE/usr/share/doc/hawk/copyright" <<EOT
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: Hawk (formerly Squint)
-Source: https://github.com/webhookstudios/squint
+Source: https://github.com/webhookstudios/hawk
 
 Files: *
 Copyright: $(date +%Y) webhookstudios
@@ -46,18 +46,21 @@ Copyright: 2023 The Young Serif Project Authors; 2015 The Public Sans Project Au
 License: OFL-1.1
  The full license texts are in the sedge/fonts/ folder.
 EOT
-chmod 644 "$STAGE/usr/share/doc/squint/copyright"
+chmod 644 "$STAGE/usr/share/doc/hawk/copyright"
 
+# Replaces/Breaks take over from this app's old package name, squint.
 cat > "$STAGE/DEBIAN/control" <<EOT
-Package: squint
+Package: hawk
 Version: $VERSION
 Architecture: all
 Maintainer: webhookstudios <354619278+webhookstudios@users.noreply.github.com>
 Installed-Size: $(du -sk "$STAGE/usr" | cut -f1)
 Depends: python3, python3-gi, gir1.2-gtk-4.0, gir1.2-adw-1 (>= 1.5), gir1.2-gst-plugins-base-1.0, gstreamer1.0-plugins-good, gstreamer1.0-gtk4
+Replaces: squint (<< 2~)
+Breaks: squint (<< 2~)
 Section: video
 Priority: optional
-Homepage: https://github.com/webhookstudios/squint
+Homepage: https://github.com/webhookstudios/hawk
 Description: Webcam settings, live preview and presets
  Hawk (formerly Squint) is a control panel for USB webcams. It shows a live preview and
  every setting the camera reports: pan, tilt and zoom, focus, exposure,
@@ -72,4 +75,4 @@ EOT
 find "$STAGE" -type d -exec chmod 755 {} +
 
 mkdir -p "$ROOT/dist"
-dpkg-deb --root-owner-group --build "$STAGE" "$ROOT/dist/squint_${VERSION}_all.deb"
+dpkg-deb --root-owner-group --build "$STAGE" "$ROOT/dist/hawk_${VERSION}_all.deb"

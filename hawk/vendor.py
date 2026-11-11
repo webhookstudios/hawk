@@ -7,7 +7,7 @@ OBSBOT Meet 4K: AI tracking on/off, from the open-source meet4k tool
 (https://github.com/samliddicott/meet4k, LGPL-2.1), which was written for and used on that
 camera: extension unit 6, selector 6, 60-byte commands of the form [field, length, value...].
 Other OBSBOT models (Meet 2, Tiny, Tiny 2, Tail) use different units or layouts that are not
-published, so Squint leaves their AI modes alone.
+published, so Hawk leaves their AI modes alone.
 """
 import ctypes
 import fcntl

@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Application
 Name=Hawk camera presets
-Comment=Puts your last Squint preset back at login and whenever a webcam is plugged in
+Comment=Puts your last Hawk preset back at login and whenever a webcam is plugged in
 Exec=@EXEC@ --background
 NoDisplay=true
 X-GNOME-Autostart-enabled=true

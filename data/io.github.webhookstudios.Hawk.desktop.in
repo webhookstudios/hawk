@@ -8,4 +8,4 @@ Icon=@ICON@
 Terminal=false
 Categories=AudioVideo;Video;GTK;
 Keywords=squint;sedge;webcam;camera;obsbot;uvc;v4l2;zoom;focus;exposure;white balance;preset;
-StartupWMClass=io.github.webhookstudios.Squint
+StartupWMClass=io.github.webhookstudios.Hawk

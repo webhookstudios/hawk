@@ -1,8 +1,10 @@
-"""Settings and presets, kept as one plain JSON file in ~/.config/squint."""
+"""Settings and presets, kept as one plain JSON file in ~/.config/hawk."""
 import json
 import os
 
-CONFIG = os.path.join(os.environ.get('XDG_CONFIG_HOME', os.path.expanduser('~/.config')), 'squint')
+CONFIG = os.path.join(os.environ.get('XDG_CONFIG_HOME', os.path.expanduser('~/.config')), 'hawk')
+# Hawk was called Squint. Its settings are copied over the first time; the old folder stays as a backup.
+OLD_CONFIG = os.path.join(os.environ.get('XDG_CONFIG_HOME', os.path.expanduser('~/.config')), 'squint')
 
 DEFAULTS = {
     'camera': '',          # key of the camera picked last
@@ -23,6 +25,9 @@ def _write(path, data):
 
 class Store:
     def __init__(self, path=None):
+        if path is None and not os.path.exists(CONFIG) and os.path.isdir(OLD_CONFIG):
+            import shutil
+            shutil.copytree(OLD_CONFIG, CONFIG)
         self.path = path or os.path.join(CONFIG, 'settings.json')
         self.load()
 
@@ -52,7 +57,7 @@ class Store:
         entry.setdefault('positions', {})    # name -> {control id: value}
         entry.setdefault('last_preset', '')
         entry.setdefault('last_position', '')
-        entry.setdefault('current', {})      # every setting as you last left it in Squint
+        entry.setdefault('current', {})      # every setting as you last left it in Hawk
         entry.setdefault('vendor', {})       # camera-specific choices, e.g. {'tracking': 'fixed'}
         if name and entry['name'] != name:
             entry['name'] = name

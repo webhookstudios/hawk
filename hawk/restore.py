@@ -1,6 +1,6 @@
 """Puts a camera back the way you left it.
 
-Used at login, when a camera is plugged in, when another app opens the camera, when Squint
+Used at login, when a camera is plugged in, when another app opens the camera, when Hawk
 starts, and by the command line.
 """
 from . import v4l2, vendor

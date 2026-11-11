@@ -1,4 +1,4 @@
-"""Renders the window to a PNG, for the README. Used only when SQUINT_SCREENSHOT is set.
+"""Renders the window to a PNG, for the README. Used only when HAWK_SCREENSHOT is set.
 
 Also writes <name>.json with where the preview sits, so docs tooling can blur it.
 """
@@ -29,7 +29,7 @@ def capture(win, path):
 def capture_later(win, path, delay_ms=4000):
     def go():
         capture(win, path)
-        if not GLib.getenv('SQUINT_SCREENSHOT_KEEP'):
+        if not GLib.getenv('HAWK_SCREENSHOT_KEEP'):
             win.get_application().quit()
         return False
     GLib.timeout_add(delay_ms, go)

@@ -74,22 +74,22 @@ No `v4l2-ctl` or other tools needed: Hawk talks to the camera directly.
 
 ### With the deb package (recommended)
 
-Download `squint_1.1.0_all.deb` from the [latest release](https://github.com/webhookstudios/squint/releases/latest), then:
+Download `hawk_1.1.0_all.deb` from the [latest release](https://github.com/webhookstudios/hawk/releases/latest), then:
 
 ```bash
-sudo apt install ./squint_1.1.0_all.deb
+sudo apt install ./hawk_1.1.0_all.deb
 ```
 
 Open **Hawk** from the apps menu. The package also adds a login item that puts your last preset back. To remove it:
 
 ```bash
-sudo apt remove squint
+sudo apt remove hawk
 ```
 
 ### From source, for the current user only
 
 ```bash
-git clone https://github.com/webhookstudios/squint.git
+git clone https://github.com/webhookstudios/hawk.git
 ```
 
 ```bash
@@ -97,10 +97,10 @@ sudo apt install python3-gi gir1.2-adw-1 gir1.2-gst-plugins-base-1.0 gstreamer1.
 ```
 
 ```bash
-./squint/install.sh
+./hawk/install.sh
 ```
 
-This installs to `~/.local/share/squint`, adds `squint` to `~/.local/bin`, and adds the same login item. Remove it with `./install.sh --uninstall`.
+This installs to `~/.local/share/hawk`, adds `hawk` to `~/.local/bin`, and adds the same login item. Remove it with `./install.sh --uninstall`.
 
 ## Using it
 
@@ -114,18 +114,18 @@ This installs to `~/.local/share/squint`, adds `squint` to `~/.local/bin`, and a
 ## Command line and shortcuts
 
 ```
-squint --list                  # cameras, and their saved presets and positions
-squint --apply "Desk"          # apply a preset or position by name
-squint --apply "Bright" --camera "Meet"   # pick a camera by name or /dev/video path
+hawk --list                  # cameras, and their saved presets and positions
+hawk --apply "Desk"          # apply a preset or position by name
+hawk --apply "Bright" --camera "Meet"   # pick a camera by name or /dev/video path
 ```
 
-For a keyboard shortcut, go to Settings → Keyboard → View and Customize Shortcuts → Custom Shortcuts and add one with the command `squint --apply "Whiteboard"`.
+For a keyboard shortcut, go to Settings → Keyboard → View and Customize Shortcuts → Custom Shortcuts and add one with the command `hawk --apply "Whiteboard"`.
 
 ## Where things are kept
 
 | What | Where |
 |---|---|
-| Presets, positions and settings | `~/.config/squint/settings.json` |
+| Presets, positions and settings | `~/.config/hawk/settings.json` |
 | Login item | `~/.config/autostart/` (source install) or `/etc/xdg/autostart/` (deb) |
 | How you left each camera | The same settings file, under `current` |
 
@@ -138,12 +138,12 @@ Presets are stored per camera, by its USB vendor and product id and serial numbe
 - Every change you make in Hawk is saved as how you left that camera. Hawk watches each `/dev/video*` node with inotify. Opening a device raises an event, whichever app opens it, so Hawk knows when Zoom or a browser starts the camera. Two seconds later it compares the camera with what you left and puts back only what differs. If the camera refuses a value, Hawk won't keep retrying.
 - Pan, tilt and zoom use absolute positions when the camera has them, otherwise relative steps or speed controls (move while held, stop on release), as PTZ cameras do.
 - The preview is a GStreamer pipeline (`v4l2src ! jpegdec ! gtk4paintablesink`, falling back to raw video). It decodes MJPEG with `jpegdec` directly, because `decodebin`'s `jpegparse` rejects the Meet 2's frames.
-- The login item runs `squint --background`: no window, it watches `/dev` for cameras and for apps opening them. Opening Hawk while it runs just opens the window in the same process, and closing the window leaves it running.
+- The login item runs `hawk --background`: no window, it watches `/dev` for cameras and for apps opening them. Opening Hawk while it runs just opens the window in the same process, and closing the window leaves it running.
 
 ## Development
 
 ```bash
-./bin/squint
+./bin/hawk
 ```
 
 Build the deb with `./build-deb.sh` (needs only `dpkg-deb`). `tests/ui.py` drives the real window against a connected camera (sliders, Automatic/Manual, presets, positions) and puts the camera's settings back afterwards:
@@ -154,16 +154,16 @@ XDG_CONFIG_HOME=$(mktemp -d) python3 tests/ui.py
 
 | File | Purpose |
 |---|---|
-| `squint/window.py` | The main window: preview, camera picker, presets, positions and the position pad |
-| `squint/controls.py` | One row per control, and which group and name each control gets |
-| `squint/v4l2.py` | Finds cameras and reads and writes their controls with V4L2 ioctls |
-| `squint/preview.py` | The live preview pipeline |
-| `squint/restore.py` | Applies a named preset, and puts the camera back how you left it |
-| `squint/guard.py` | Notices when any app opens a camera (inotify) |
-| `squint/vendor.py` | Camera-specific extras with a published protocol (OBSBOT Meet 4K tracking) |
-| `squint/store.py` | Presets and settings |
-| `squint/app.py` | Start-up, the command line, background mode and camera plug-in |
-| `squint/shots.py` | Renders the window to PNG for these screenshots |
+| `hawk/window.py` | The main window: preview, camera picker, presets, positions and the position pad |
+| `hawk/controls.py` | One row per control, and which group and name each control gets |
+| `hawk/v4l2.py` | Finds cameras and reads and writes their controls with V4L2 ioctls |
+| `hawk/preview.py` | The live preview pipeline |
+| `hawk/restore.py` | Applies a named preset, and puts the camera back how you left it |
+| `hawk/guard.py` | Notices when any app opens a camera (inotify) |
+| `hawk/vendor.py` | Camera-specific extras with a published protocol (OBSBOT Meet 4K tracking) |
+| `hawk/store.py` | Presets and settings |
+| `hawk/app.py` | Start-up, the command line, background mode and camera plug-in |
+| `hawk/shots.py` | Renders the window to PNG for these screenshots |
 
 ## License
 

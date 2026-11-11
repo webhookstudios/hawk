@@ -20,7 +20,7 @@ OPEN_DELAY_MS = 2000  # after an app opens the camera, let it finish setting up 
 REPEAT_S = 15.0       # the same fix twice within this long means the camera won't keep it
 
 
-class SquintApp(Adw.Application):
+class HawkApp(Adw.Application):
     def __init__(self):
         super().__init__(application_id=APP_ID, flags=Gio.ApplicationFlags.DEFAULT_FLAGS)
         self.store = Store()
@@ -141,7 +141,7 @@ class SquintApp(Adw.Application):
         self.open_ids.pop(path, None)
         win = self.props.active_window
         if win and getattr(win, 'recently_touched', lambda: False)():
-            return False  # you are changing things in Squint right now
+            return False  # you are changing things in Hawk right now
         info = next((c for c in V.list_cameras() if c.path == path), None)
         if not info:
             return False
@@ -152,7 +152,7 @@ class SquintApp(Adw.Application):
                 diff = restore.differences(cam, restore.wanted(self.store, info))
                 if not diff:
                     return False
-                # Squint's own check opens the camera too. If the last fix was this same one,
+                # Hawk's own check opens the camera too. If the last fix was this same one,
                 # the camera isn't keeping it; don't loop.
                 fix = tuple(sorted(diff.items()))
                 last, when = self.last_fix.get(path, (None, 0))
@@ -172,10 +172,10 @@ class SquintApp(Adw.Application):
             return
         win = self.props.active_window
         if not win:
-            from .window import SquintWindow
-            win = SquintWindow(self, self.store)
+            from .window import HawkWindow
+            win = HawkWindow(self, self.store)
             win.connect('close-request', self._on_window_closed)
-            shot = os.environ.get('SQUINT_SCREENSHOT')
+            shot = os.environ.get('HAWK_SCREENSHOT')
             if shot:
                 from .shots import capture_later
                 capture_later(win, shot)
@@ -208,23 +208,23 @@ class SquintApp(Adw.Application):
         return False
 
     def _restore(self, info):
-        self.store.load()  # another Squint (the command line) may have changed it
+        self.store.load()  # another Hawk (the command line) may have changed it
         try:
             return restore.reapply_last(self.store, info)
         except OSError as e:
-            print(f'squint: could not restore {info.name}: {e}', file=sys.stderr)
+            print(f'hawk: could not restore {info.name}: {e}', file=sys.stderr)
             return []
 
     def _about(self, *_args):
         Adw.AboutDialog(application_name='Hawk', application_icon=APP_ID, version=__version__,
                         developer_name='webhookstudios', license_type=Gtk.License.GPL_2_0,
-                        website='https://github.com/webhookstudios/squint',
+                        website='https://github.com/webhookstudios/hawk',
                         comments='Webcam settings and presets.\n\nPart of the Sedge family of apps.').present(self.props.active_window)
 
 
 def main(argv):
     GLib.set_prgname(APP_ID)
-    return SquintApp().run(argv)
+    return HawkApp().run(argv)
 
 
 if __name__ == '__main__':

@@ -31,7 +31,7 @@ AXES = [
 REMEMBER_MS = 600  # settle time before the current settings are saved as how you left them
 
 
-class SquintWindow(Adw.ApplicationWindow):
+class HawkWindow(Adw.ApplicationWindow):
     def __init__(self, app, store):
         super().__init__(application=app, title='Hawk', default_width=1180, default_height=760)
         self.set_size_request(760, 520)

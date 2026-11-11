@@ -1,2 +1,0 @@
-__version__ = '1.1.0'
-APP_ID = 'io.github.webhookstudios.Squint'

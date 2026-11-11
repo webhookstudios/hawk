@@ -12,8 +12,8 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from gi.repository import Gio, GLib  # noqa: E402
 
-from squint import v4l2 as V  # noqa: E402
-from squint.app import SquintApp  # noqa: E402
+from hawk import v4l2 as V  # noqa: E402
+from hawk.app import HawkApp  # noqa: E402
 
 SHOTS = sys.argv[1] if len(sys.argv) > 1 else None
 failures = []
@@ -44,7 +44,7 @@ def save_named(kind, name):
 
 def shot(name):
     if SHOTS:
-        from squint.shots import capture
+        from hawk.shots import capture
         capture(win, os.path.join(SHOTS, name + '.png'))
 
 
@@ -219,8 +219,8 @@ def run_steps():
     GLib.timeout_add(2500, go, 0)
 
 
-app = SquintApp()
-app.set_flags(app.get_flags() | Gio.ApplicationFlags.NON_UNIQUE)  # runs beside an open Squint
+app = HawkApp()
+app.set_flags(app.get_flags() | Gio.ApplicationFlags.NON_UNIQUE)  # runs beside an open Hawk
 win = None
 ORIGINAL = {}
 
