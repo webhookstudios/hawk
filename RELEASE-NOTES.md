@@ -1,9 +1,11 @@
-# Hawk 1.1.2
+# Hawk 1.1.3
 
-- Fixes Hawk not staying open in the background after you log in. It closed right away, so your camera settings weren't put back when another app opened the camera.
+A bigger app icon. Everything else works exactly as before.
+
+- The app icon is bigger, so it sits evenly with your other apps in the dock and the app grid.
 
 Install:
 
 ```bash
-sudo apt install ./hawk_1.1.2_all.deb
+sudo apt install ./hawk_1.1.3_all.deb
 ```
