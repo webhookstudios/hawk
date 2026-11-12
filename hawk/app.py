@@ -52,10 +52,12 @@ class HawkApp(Adw.Application):
             return self._cli_apply(options.lookup_value('apply').get_string(),
                                    camera.get_string() if camera else '')
         if options.contains('background'):
+            # Set before register(): registering runs startup right away, and startup needs
+            # to know it is a windowless start so it keeps running.
+            self.background = True
             self.register(None)
             if self.get_is_remote():
                 return 0  # already running
-            self.background = True
         return -1
 
     def _cli_list(self):

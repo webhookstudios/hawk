@@ -1,11 +1,9 @@
-# Hawk 1.1.1
+# Hawk 1.1.2
 
-A small cleanup release. Everything else works exactly as before.
-
-- The package details in app stores and `apt show` no longer mention an old name.
+- Fixes Hawk not staying open in the background after you log in. It closed right away, so your camera settings weren't put back when another app opened the camera.
 
 Install:
 
 ```bash
-sudo apt install ./hawk_1.1.1_all.deb
+sudo apt install ./hawk_1.1.2_all.deb
 ```

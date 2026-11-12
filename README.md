@@ -74,10 +74,10 @@ No `v4l2-ctl` or other tools needed: Hawk talks to the camera directly.
 
 ### With the deb package (recommended)
 
-Download `hawk_1.1.1_all.deb` from the [latest release](https://github.com/webhookstudios/hawk/releases/latest), then:
+Download `hawk_1.1.2_all.deb` from the [latest release](https://github.com/webhookstudios/hawk/releases/latest), then:
 
 ```bash
-sudo apt install ./hawk_1.1.1_all.deb
+sudo apt install ./hawk_1.1.2_all.deb
 ```
 
 Open **Hawk** from the apps menu. The package also adds a login item that puts your last preset back. To remove it:
